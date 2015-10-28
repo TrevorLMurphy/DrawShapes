@@ -11,14 +11,16 @@ import UIKit
 @IBDesignable
 class ViewController: UIViewController, UIPickerViewDelegate {
     
-    @IBOutlet weak var myLabel: UILabel!
-    @IBOutlet weak var mySlider: UISlider!
+    @IBOutlet weak var stepper: UIStepper!
+    @IBOutlet weak var counter: UILabel!
     var shapes = ["Circle", "Triangle", "Square", "Pentagon"]
     var selected: String = "Circle"
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        stepper.wraps = true
+        stepper.autorepeat = true
+        stepper.maximumValue = 360
     }
     
     override func didReceiveMemoryWarning() {
@@ -46,16 +48,16 @@ class ViewController: UIViewController, UIPickerViewDelegate {
         self.performSegueWithIdentifier("beginApp", sender:sender)
     }
     
-    @IBAction func sliderChanged(sender: UISlider) {
+    @IBAction func stepperValueChanged(sender: UIStepper) {
         let currentValue = Int(sender.value)
-        myLabel.text = "\(currentValue)"
+        counter.text = "\(currentValue)"
     }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        
         // Create a new variable to store the instance of the next view controller
         let vc = segue.destinationViewController as! DrawCanvas
         vc.selected = selected
-        vc.timesDrawn = Int(myLabel.text!)
+        vc.timesDrawn = Int(counter.text!)
     }
 }
 

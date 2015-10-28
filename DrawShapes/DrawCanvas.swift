@@ -19,7 +19,6 @@ class DrawCanvas: UIViewController {
         super.viewDidLoad()
         DrawView.whichShape = selected
         DrawView.timesDrawn = timesDrawn
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
