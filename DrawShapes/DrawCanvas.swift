@@ -11,6 +11,7 @@ import UIKit
 class DrawCanvas: UIViewController {
     
     @IBOutlet var DrawView: Shapes!
+    @IBOutlet var doubleTap: UITapGestureRecognizer!
     
     var selected: String!
     var timesDrawn: Int!
@@ -20,10 +21,14 @@ class DrawCanvas: UIViewController {
         DrawView.whichShape = selected
         DrawView.timesDrawn = timesDrawn
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func doubleTapped(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil);
     }
 
 }

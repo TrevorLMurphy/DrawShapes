@@ -45,7 +45,7 @@ class ViewController: UIViewController, UIPickerViewDelegate {
     }
     
     @IBAction func selected(sender: AnyObject) {
-        self.performSegueWithIdentifier("beginApp", sender:sender)
+        self.performSegueWithIdentifier("beginApp", sender: sender)
     }
     
     @IBAction func stepperValueChanged(sender: UIStepper) {

@@ -105,14 +105,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Kb4-FZ-N55" appends="YES" id="lR3-4c-5az"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="DrawView" destination="e3I-3Q-c9i" id="YR5-pY-MsC"/>
+                        <outlet property="doubleTap" destination="Kb4-FZ-N55" id="0R4-eU-Mha"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mAe-Tn-dJY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer numberOfTapsRequired="2" id="Kb4-FZ-N55">
+                    <connections>
+                        <action selector="doubleTapped:" destination="7BH-e6-sZK" id="HyH-P8-nYg"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1194" y="302"/>
+            <point key="canvasLocation" x="1260" y="297"/>
         </scene>
     </scenes>
 </document>
