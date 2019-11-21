@@ -9,18 +9,22 @@
 import UIKit
 
 @IBDesignable
-class ViewController: UIViewController, UIPickerViewDelegate {
+class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     @IBOutlet weak var stepper: UIStepper!
     @IBOutlet weak var counter: UILabel!
-    var shapes = ["Circle", "Triangle", "Square", "Pentagon"]
-    var selected: String = "Circle"
+    @IBOutlet weak var picker: UIPickerView!
+    
+    var pickerData = ["Circle", "Triangle", "Square", "Pentagon"]
+    var selected: String = "Triangle"
 
     override func viewDidLoad() {
         super.viewDidLoad()
         stepper.wraps = true
         stepper.autorepeat = true
         stepper.maximumValue = 360
+        picker.delegate = self
+        picker.dataSource = self
     }
     
     override func didReceiveMemoryWarning() {
@@ -28,24 +32,35 @@ class ViewController: UIViewController, UIPickerViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func numberOfComponentsInPickerView(pickerView: UIPickerView!) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return shapes.count
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickerData.count
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return shapes[row]
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return pickerData[row]
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        selected = shapes[row]
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        selected = pickerData[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let title = pickerData[row]
+        let formattedTitle = NSAttributedString(
+            string: title,
+            attributes: [
+                NSAttributedString.Key.foregroundColor: UIColor.black
+            ]
+        )
+        return formattedTitle
     }
     
     @IBAction func selected(sender: AnyObject) {
-        self.performSegueWithIdentifier("beginApp", sender: sender)
+        self.performSegue(withIdentifier: "beginApp", sender: sender)
     }
     
     @IBAction func stepperValueChanged(sender: UIStepper) {
@@ -53,9 +68,8 @@ class ViewController: UIViewController, UIPickerViewDelegate {
         counter.text = "\(currentValue)"
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        // Create a new variable to store the instance of the next view controller
-        let vc = segue.destinationViewController as! DrawCanvas
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let vc = segue.destination as! DrawCanvas
         vc.selected = selected
         vc.timesDrawn = Int(counter.text!)
     }
